@@ -1,15 +1,12 @@
 from flask import Flask,redirect,request,session,render_template,url_for
-from tables_scripts import get_question_after, check_answer
-from random import randint, shuffle
-import os 
-
-quiz = 0
-question_last = 0
+from tables_scripts import get_question_after, check_answer, get_quizes
+from random import shuffle
+import os
 
 def save_answers():
     answer = request.form.get('answer')
     quest_id = request.form.get('q_id')
-    session['last_question'] = quest_id
+    session['last_question'] = int(quest_id)
     session['total'] += 1
     if check_answer(quest_id,answer):
         session['answers'] += 1
@@ -26,12 +23,10 @@ def question_form(question):
                            answers_list = answers_list)
 
 def index():
-    global quiz,question_last
-    quiz = randint(1,3)
-
     if request.method == 'GET':
-        return render_template('index.html')  # Передаем в template
-    
+        q_list = get_quizes()
+        return render_template('index.html', q_list=q_list)  # Передаем в template
+
     if request.method == 'POST':
         quiz = quiz_form()
         if quiz is None:

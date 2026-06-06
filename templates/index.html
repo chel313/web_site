@@ -13,10 +13,6 @@
     <select name="quiz">
         {% for quiz_id, name in q_list %}
             <option value="{{quiz_id}}">{{name}}</option>
-        <!-- {% else %}
-            <option value="1">Географический тест</option>
-            <option value="2">Мини тест на историю</option>
-            <option value="3">Мини тест на математику</option> -->
         {% endfor %}
     </select>
 

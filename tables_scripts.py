@@ -94,16 +94,18 @@ def add_quiz():
     close()
 
 def add_links():
+    # связь викторины с её вопросами: (quiz_id, question_id)
+    links = [
+        # Географический тест
+        (1, 5), (1, 6), (1, 9), (1, 12),
+        # Мини тест на историю
+        (2, 3), (2, 4), (2, 7), (2, 11),
+        # Мини тест на математику
+        (3, 1), (3, 2), (3, 8), (3, 10)
+    ]
     open_db()
-    cursor.execute('''PRAGMA foreign_keys=on''')
-    query = "INSERT INTO quiz_content (quiz_id, question_id) VALUES (?,?)"
-    answer = input("Добавить связь (y / n)? ")
-    while answer != 'n':
-        quiz_id = int(input("id викторины: "))
-        question_id = int(input("id вопроса: "))
-        cursor.execute(query, [quiz_id, question_id])
-        conn.commit()
-        answer = input("Добавить связь (y / n)? ")
+    cursor.executemany("INSERT INTO quiz_content (quiz_id, question_id) VALUES (?,?)", links)
+    conn.commit()
     close()
 
 def show(table):
@@ -117,6 +119,13 @@ def show_tables():
     show('question')
     show('quiz')
     show('quiz_content')
+
+def get_quizes():
+    open_db()
+    cursor.execute('SELECT id, name FROM quiz')
+    result = cursor.fetchall()
+    close()
+    return result
 
 def get_question_after(question_id = 0, quiz_id=1):
     open_db()
@@ -134,25 +143,25 @@ def get_question_after(question_id = 0, quiz_id=1):
     return result
 
 def check_answer(quest_id,answer):
-    query = ''' SELECT question.answer 
-                FROM quiz_content,question
-                WHERE quiz_content.id = ?
-                AND quiz_content.question_id = question.id
-            '''
+    query = 'SELECT answer FROM question WHERE id = ?'
     open_db()
-    cursor.execute(query,int(quest_id,))
+    cursor.execute(query, (int(quest_id),))
     result = cursor.fetchone()
     close()
-    return result
+    if result is None:
+        return False
+    return result[0] == answer
 
 def main():
     clear_db()
     create()
     add_questions()
     add_quiz()
+    add_links()
     show_tables()
-    
-main()
+
+if __name__ == '__main__':
+    main()
 
 
 
