@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Викторина</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Результаты викторины</h2>
+
+    <p>Ваш результат {{answers}} из {{total}}</p>
+
+    <div>
+        <a href="{{ url_for('index') }}">Пройти ещё раз</a>
+    </div>
+    
+</body>
+</html>

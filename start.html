@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Викторина</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <form method="post" action="{{ url_for('test') }}">
+    <select name="quiz">
+        {% for quiz_id, name in q_list %}
+            <option value="{{quiz_id}}">{{name}}</option>
+        {% endfor %}
+    </select>
+
+    <select name="list">
+        <option value="s1">География</option>
+        <option value="s2">История</option>
+        <option value="s3">Математика</option>
+    </select>
+
+    <input type="submit" value="Отправить">
+    </form>
+
+    <div class="btn">
+        <a href="{{url_for('index')}}">На главную</a>
+    </div>
+
+</body>
+</html>

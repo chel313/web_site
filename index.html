@@ -1,8 +1,26 @@
 <!DOCTYPE html>
-<html>
-<head><title>Тест на географию</title>
-</head>>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Викторина</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 <body>
-    <h1>Тест на географию</h1>>
-</body>>
-</html>>
+    <h2>Викторина</h2>
+    <p>Выберите викторину и начните тест!</p>
+    <form method="post" action="/">
+    <select name="quiz">
+        {% for quiz_id, name in q_list %}
+            <option value="{{quiz_id}}">{{name}}</option>
+        <!-- {% else %}
+            <option value="1">Географический тест</option>
+            <option value="2">Мини тест на историю</option>
+            <option value="3">Мини тест на математику</option> -->
+        {% endfor %}
+    </select>
+
+    <button type="submit">Начать тест</button>
+    </form>
+</body>
+</html>
