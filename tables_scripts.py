@@ -144,16 +144,6 @@ def check_answer(quest_id,answer):
     result = cursor.fetchone()
     close()
     return result
-    # """ ИСПРАВЛЕНО: Безопасный запрос и поиск по правильному id вопроса """
-    # open_db()
-    # query = "SELECT answer FROM question WHERE id = ?"
-    # cursor.execute(query, (int(quest_id),)) # Корректная передача кортежа параметров
-    # result = cursor.fetchone()
-    # close()
-    
-    # if result and result[0] == answer:
-    #     return True
-    # return False
 
 def main():
     clear_db()
